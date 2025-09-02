@@ -44,7 +44,7 @@ You must follow these instructions exactly and adhere to all rules and decision 
 
 1.  **Clean Existing Config**: Check `package.json` for any existing ESLint configuration keys (`eslintConfig`, etc.). If found, remove them to prevent conflicts.
 2.  **Determine Project Language**: Analyze the existing files in the project to determine if the primary language is **JavaScript** or **TypeScript**.
-3.  **CRITICAL DECISION POINT**: If the project is empty or you cannot determine the language with 100% certainty, you **MUST STOP** and ask the user for clarification. State "Is this a JavaScript or TypeScript project?" before proceeding.
+3.  **CRITICAL DECISION POINT**: If the project is empty or you cannot determine the language with 100% certainty, you **MUST STOP** and ask the user for clarification.
 4.  **Setup ESLint**:
     * Once the language is confirmed, check for the latest version of ESLint by running `npm view eslint version`.
     * Install and initialize ESLint, following the most current guidelines from the official documentation (`https://eslint.org/docs/latest/use/getting-started`).
