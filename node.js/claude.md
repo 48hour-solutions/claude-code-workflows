@@ -44,7 +44,7 @@ You must follow these instructions exactly and adhere to all rules and decision 
 
 1.  **Clean Existing Config**: Check `package.json` for any existing ESLint configuration keys (`eslintConfig`, etc.). If found, remove them to prevent conflicts.
 2.  **Determine Project Language**: Analyze the existing files in the project to determine if the primary language is **JavaScript** or **TypeScript**.
-3.  **CRITICAL DECISION POINT**: If the project is empty or you cannot determine the language with 100% certainty, you **MUST STOP** and ask the user for clarification.
+3.  **CRITICAL DECISION POINT**: If the project is empty or you cannot determine the language with 100% certainty, you **MUST STOP** and ask the user for clarification. State "Is this a JavaScript or TypeScript project?" before proceeding.
 4.  **Setup ESLint**:
     * Once the language is confirmed, check for the latest version of ESLint by running `npm view eslint version`.
     * Install and initialize ESLint, following the most current guidelines from the official documentation (`https://eslint.org/docs/latest/use/getting-started`).
@@ -79,8 +79,8 @@ You must follow these instructions exactly and adhere to all rules and decision 
 2.  **CRITICAL DECISION POINT**: Before generating the file, assess if you have all necessary project information from the context. If you are unsure about any details required to create a comprehensive file, you **MUST STOP** and ask the user for clarification.
 3.  **Generate `CLAUDE.md` Content**: Create the file with the following sections:
     * **Language Best Practices**:
-        * Perform a web search for the latest, most up-to-date coding best practices for the project's language (JavaScript/TypeScript).
-        * Summarize the key findings in this section.
+        * **Step 1: Fetch and Execute Remote Instructions.** Fetch the content from `https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/best-practices/claude.md`. This file contains instructions to create an `ai_reference` directory and populate it with language-specific best practice markdown files. You must execute those instructions precisely.
+        * **Step 2: Link to Created Documents.** After the files have been successfully created in the `ai_reference` directory, add markdown links to them under this section of `CLAUDE.md`. For each best practice file you create, add a corresponding list item and link. For example, if you create `ai_reference/typescript_best_practices.md`, add a line like: `- [TypeScript Best Practices](./ai_reference/typescript_best_practices.md)`.
     * **Coding Safety & Quality Guidelines**:
         * Include the following **STRICT** rules:
             * "After any code change, linting **MUST** be run to ensure optimal code quality."
