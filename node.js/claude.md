@@ -1,68 +1,94 @@
-Setup Instructions for Claude
+You are an expert agent specializing in setting up and configuring Node.js development environments. Your task is to execute a precise sequence of steps to initialize a new or existing Node.js project with a specific workflow, including scripts, linting, and custom AI assistant configurations.
 
-You are setting up a Node.js JavaScript/TypeScript workflow, follow these steps exactly:
+You must follow these instructions exactly and adhere to all rules and decision points.
 
-1. Check for an existing package.json, if not found , initialize the barebones for a new node.js project, and set up the package.json
-2. Create a folder in root of the project directory named `scripts`
-3. Get the script contents from each of these urls:
-	- https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/node.js/scripts/check_fileoverview.ps1
-	- https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/node.js/scripts/count_lines.ps1
-	- https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/node.js/scripts/extract_fileoverview.ps1
-	- https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/node.js/scripts/scan_eslint_disable.ps1
-4. Save each script to the scripts folder you just created (count_lines.ps1, extract_fileoverview.ps1, etc.)
-# If ANY of the requests fail, you MUST stop and tell the user the setup failed.
-5. Update the package.json to add calls to the scripts, add these exactly without modification (the user is expected to be using Windows)
-# Auto Documentation Scripts
+### **Core Directives & Rules**
 
-"docs:check": "powershell -ExecutionPolicy Bypass -File scripts/check_fileoverview.ps1",
-"docs:combine": "powershell -ExecutionPolicy Bypass -File scripts/extract_fileoverview.ps1",
-"docs:clean": "rimraf \"fileoverview-collection.json\""
+1.  **Error Handling**: If any web request to fetch a file fails, you MUST stop the entire process immediately, report the specific failure, and await further instructions. Do not proceed with a partial setup.
+2.  **No Assumptions**: You must not make assumptions about the project's configuration. At critical decision points (like determining the project language), you are required to stop and ask the user for clarification if the answer is not 100% certain from the existing project files.
+3.  **Environment**: All commands and file paths should be compatible with a Windows operating system.
+4.  **Exactness**: When instructed to add content (e.g., scripts in `package.json`), you must use the provided text exactly as written, without modification.
 
-# Other Scripts 
-"lint:check-disabled": "powershell -ExecutionPolicy Bypass -File scripts/scan_eslint_disable.ps1",
-"linecount": "powershell -ExecutionPolicy Bypass -File scripts/count_lines.ps1"
+---
 
-6. Check for an existing linter config in package.json If found, remove it to prepare to setup eslint.
-Setup the latest version of eslint (check with `npm view eslint version`) and set up a barebones configuration.
-Then set up the eslint.config.js (or .mjs, depending on the existing code or the user's goal for the project).
-Follow guidelines from here:
-https://eslint.org/docs/latest/use/getting-started
-https://eslint.org/docs/latest/use/configure/
+### **Setup Procedure**
 
-You will need to determine at this step if the primary language for the project is JavaScript or TypeScript, as it will affect the setup process.
-If you are unsure from the existing project code, or if it's an empty folder (new project), stop and ask the user for any clarification(s) needed.
-NEVER make assumptions , as it could lead to an incorrect setup.
+**Phase 1: Project & Script Initialization**
 
-8. Check for an exiting .claude folder, if not found, create it.
-9. Copy the contents of each agent file here:
-	- https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/generic/agents/code-documenter.md
-	- https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/generic/agents/codebase-explorer.md
-	- https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/generic/agents/git-repo-analyzer.md
-	- https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/generic/agents/readme-generator.md
-	- https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/generic/agents/security-audit-specialist.md
-# If ANY of the requests fail, you MUST stop and tell the user the setup failed.
-To .claude/agents (create the agents folder if it does not exist)
-10. Copy the contents of each command file here:
-	- https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/generic/commands/generate-readme.md
-	- https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/generic/commands/load-changes.md
-	- https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/generic/commands/new-command.md
-	- https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/generic/commands/push.md
-To .claude/commands (create the commands folder if it does not exist)
-# When creating the folders in .claude, be sure to use the correct commands for Windows, to create the folders *within* .claude as sub-folders
-# If ANY of the requests fail, you MUST stop and tell the user the setup failed.
-11. Check for an existing CLAUDE.md file, if one does exist, you may skip this step.
-Based on the project requirements and information , you'll need to generate a comprehensive CLAUDE.md file. If you are unsure of ANY information,
-stop and ask the user for any clarification(s) needed.
+1.  **Check `package.json`**:
+    * Verify if a `package.json` file exists in the root directory.
+    * If it does not exist, execute the command `npm init -y` to create a default one.
+2.  **Create `scripts` Directory**:
+    * Create a new folder named `scripts` in the project's root directory.
+3.  **Download PowerShell Scripts**:
+    * Fetch the content from each of the following URLs:
+        * `https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/node.js/scripts/check_fileoverview.ps1`
+        * `https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/node.js/scripts/count_lines.ps1`
+        * `https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/node.js/scripts/extract_fileoverview.ps1`
+        * `https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/node.js/scripts/scan_eslint_disable.ps1`
+    * Save each file into the `scripts` directory with its original filename.
+4.  **Update `package.json` Scripts**:
+    * Modify the `scripts` object in `package.json` to include the following key-value pairs. If a `scripts` object doesn't exist, create it.
 
-- Include comprehensive best practice sections for the languages being used (if the user is using JavaScript, TypeScript, or both). Don't generate this from your training data,
-search the web for the latest and most up to date information.
-- Include STRICT coding safety guidelines for whenever code changes are made, this MUST be done:
-	- If this is a TypeScript project, you MUST run type checking after coding changes to ENSURE no errors.
-	- ALWAYS run linting after code changes to ensure the BEST code quality
-- Remind yourself to ALWAYS use the latest versions for packages, to avoid annoying & time consuming refactors to newer versions in the future.
-ALWAYS check the latest versions with `npm view package-name version` , and then get relevant information from the web and your tools
-- Include comprehensive information about the mcp tools you are provided (you do NOT need to include 'built-in' tools like edit, find, web search , etc)
-	- Using sequential-thinking for complex reasoning and debugging, in tandem with gemini-mcp
-	- Using context7 to get library documentation & examples (falling back to web search when needed)
-	- Using code-context-provider-mcp to get a full overview of the entire project, specific folders, and more
-	
+    ```json
+    "docs:check": "powershell -ExecutionPolicy Bypass -File scripts/check_fileoverview.ps1",
+    "docs:combine": "powershell -ExecutionPolicy Bypass -File scripts/extract_fileoverview.ps1",
+    "docs:clean": "rimraf \"fileoverview-collection.json\"",
+    "lint:check-disabled": "powershell -ExecutionPolicy Bypass -File scripts/scan_eslint_disable.ps1",
+    "linecount": "powershell -ExecutionPolicy Bypass -File scripts/count_lines.ps1"
+    ```
+
+---
+
+**Phase 2: ESLint Configuration**
+
+1.  **Clean Existing Config**: Check `package.json` for any existing ESLint configuration keys (`eslintConfig`, etc.). If found, remove them to prevent conflicts.
+2.  **Determine Project Language**: Analyze the existing files in the project to determine if the primary language is **JavaScript** or **TypeScript**.
+3.  **CRITICAL DECISION POINT**: If the project is empty or you cannot determine the language with 100% certainty, you **MUST STOP** and ask the user for clarification.
+4.  **Setup ESLint**:
+    * Once the language is confirmed, check for the latest version of ESLint by running `npm view eslint version`.
+    * Install and initialize ESLint, following the most current guidelines from the official documentation (`https://eslint.org/docs/latest/use/getting-started`).
+    * Generate the appropriate configuration file (`eslint.config.js` or `eslint.config.mjs`) tailored for the specified language (JavaScript or TypeScript).
+
+---
+
+**Phase 3: Claude Assistant Environment Setup**
+
+1.  **Create `.claude` Directory**:
+    * Check for a folder named `.claude` in the root directory. If it doesn't exist, create it.
+    * Inside `.claude`, create two sub-folders: `agents` and `commands`.
+2.  **Download Agent Files**:
+    * Fetch the content from each of the following URLs and save them into the `.claude/agents` directory:
+        * `https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/generic/agents/code-documenter.md`
+        * `https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/generic/agents/codebase-explorer.md`
+        * `https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/generic/agents/git-repo-analyzer.md`
+        * `https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/generic/agents/readme-generator.md`
+        * `https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/generic/agents/security-audit-specialist.md`
+3.  **Download Command Files**:
+    * Fetch the content from each of the following URLs and save them into the `.claude/commands` directory:
+        * `https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/generic/commands/generate-readme.md`
+        * `https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/generic/commands/load-changes.md`
+        * `https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/generic/commands/new-command.md`
+        * `https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/generic/commands/push.md`
+
+---
+
+**Phase 4: Generate Project Guideline File (`CLAUDE.md`)**
+
+1.  **Check for Existing File**: If a file named `CLAUDE.md` already exists in the root directory, you may skip this entire phase.
+2.  **CRITICAL DECISION POINT**: Before generating the file, assess if you have all necessary project information from the context. If you are unsure about any details required to create a comprehensive file, you **MUST STOP** and ask the user for clarification.
+3.  **Generate `CLAUDE.md` Content**: Create the file with the following sections:
+    * **Language Best Practices**:
+        * Perform a web search for the latest, most up-to-date coding best practices for the project's language (JavaScript/TypeScript).
+        * Summarize the key findings in this section.
+    * **Coding Safety & Quality Guidelines**:
+        * Include the following **STRICT** rules:
+            * "After any code change, linting **MUST** be run to ensure optimal code quality."
+            * (If TypeScript) "For TypeScript projects, you **MUST** run type checking (`tsc --noEmit`) after any code change to ensure there are no type errors."
+    * **Dependency Management**:
+        * Include the following guideline: "Always use the latest stable versions for all packages to avoid future technical debt. Before adding a dependency, check its latest version with `npm view package-name version`."
+    * **Tool Usage**:
+        * Provide comprehensive information about the custom tools available for use:
+            * **`sequential-thinking`**: For complex reasoning, step-by-step problem-solving, and debugging.
+            * **`context7`**: For fetching library documentation, usage examples, and API specifications.
+            * **`code-context-provider-mcp`**: For gaining a high-level overview of the entire project structure, specific folders, or file contents.
