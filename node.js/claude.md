@@ -1,6 +1,6 @@
 Setup Instructions for Claude
 
-You are setting up a Node.js JavaScript/TypeScript workflow for Claude Code, follow these steps exactly:
+You are setting up a Node.js JavaScript/TypeScript workflow, follow these steps exactly:
 
 1. Check for an existing package.json, if not found , initialize the barebones for a new node.js project, and set up the package.json
 2. Create a folder in root of the project directory named `scripts`
@@ -10,6 +10,7 @@ You are setting up a Node.js JavaScript/TypeScript workflow for Claude Code, fol
 	- https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/node.js/scripts/extract_fileoverview.ps1
 	- https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/node.js/scripts/scan_eslint_disable.ps1
 4. Save each script to the scripts folder you just created (count_lines.ps1, extract_fileoverview.ps1, etc.)
+# If ANY of the requests fail, you MUST stop and tell the user the setup failed.
 5. Update the package.json to add calls to the scripts, add these exactly without modification (the user is expected to be using Windows)
 # Auto Documentation Scripts
 
@@ -39,6 +40,7 @@ NEVER make assumptions , as it could lead to an incorrect setup.
 	- https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/generic/agents/git-repo-analyzer.md
 	- https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/generic/agents/readme-generator.md
 	- https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/generic/agents/security-audit-specialist.md
+# If ANY of the requests fail, you MUST stop and tell the user the setup failed.
 To .claude/agents (create the agents folder if it does not exist)
 10. Copy the contents of each command file here:
 	- https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/generic/commands/generate-readme.md
@@ -46,6 +48,8 @@ To .claude/agents (create the agents folder if it does not exist)
 	- https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/generic/commands/new-command.md
 	- https://raw.githubusercontent.com/48hour-solutions/claude-code-workflows/refs/heads/main/generic/commands/push.md
 To .claude/commands (create the commands folder if it does not exist)
+# When creating the folders in .claude, be sure to use the correct commands for Windows, to create the folders *within* .claude as sub-folders
+# If ANY of the requests fail, you MUST stop and tell the user the setup failed.
 11. Check for an existing CLAUDE.md file, if one does exist, you may skip this step.
 Based on the project requirements and information , you'll need to generate a comprehensive CLAUDE.md file. If you are unsure of ANY information,
 stop and ask the user for any clarification(s) needed.
